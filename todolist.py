@@ -6,8 +6,7 @@ import os
 app = Flask(__name__)
 # make sure to replace localhost with the actual IP of the backend service after you deploy the backend service on Google Cloud
 # for example, like this: TODO_API_URL = "http://123.456.789.123:5001"
-TODO_API_URL = "http://localhost:5001"
-
+TODO_API_URL = "http://"+os.environ['TODO_API_IP']+":5001"
 
 @app.route("/")
 def show_list():
@@ -26,7 +25,6 @@ def add_entry():
 @app.route("/delete/<item>")
 def delete_entry(item):
     item = urllib.parse.quote(item)
-    item = urllib.parse.quote(item)
     requests.delete(TODO_API_URL+"/api/items/"+item)
     return redirect(url_for('show_list'))
 
@@ -35,17 +33,6 @@ def mark_as_done(item):
     item = urllib.parse.quote(item)
     requests.put(TODO_API_URL+"/api/items/"+item)
     return redirect(url_for('show_list'))
-
-
-if __name__ == "__main__":
-    app.run("0.0.0.0")
-
-
-@app.teardown_appcontext
-def close_db(error):
-    """Closes the database again at the end of the request."""
-    if hasattr(g, 'sqlite_db'):
-        g.sqlite_db.close()
 
 
 if __name__ == "__main__":
