@@ -1,8 +1,5 @@
 FROM python:3.7-alpine
 
-ARG api_ip
-ENV TODO_API_IP=${api_ip}
-
 # Install dependencies
 RUN python -m pip install --upgrade pip
 RUN pip install flask
