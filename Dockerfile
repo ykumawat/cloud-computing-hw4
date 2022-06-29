@@ -9,7 +9,7 @@ RUN pip install flask
 RUN pip install requests
 
 # Expose port 5000
-EXPOSE 5000/tcp
+EXPOSE 5000
 
 # Copy todolist.py, index.html
 COPY . ./
